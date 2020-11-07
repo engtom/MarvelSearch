@@ -56,10 +56,7 @@ final class DismissingCardAnimation: NSObject, UIViewControllerAnimatedTransitio
         
         container.layoutIfNeeded()
         
-        let forceCardToFillBottom = screens.detail.cardView.bottomAnchor.constraint(equalTo: detailView.bottomAnchor)
-        
         func animateCardViewBackToPlace() {
-            //forceCardToFillBottom.isActive = true
             detailView.transform = CGAffineTransform.identity
             animatedContainerView.layer.cornerRadius = 15
             animatedContainerView.clipsToBounds = true
@@ -74,7 +71,7 @@ final class DismissingCardAnimation: NSObject, UIViewControllerAnimatedTransitio
             container.layoutIfNeeded()
         }
         
-        func completeEverything(){
+        func finishingAnimations(){
             let success = !context.transitionWasCancelled
             animatedContainerView.removeConstraints(animatedContainerView.constraints)
             animatedContainerView.removeFromSuperview()
@@ -86,7 +83,6 @@ final class DismissingCardAnimation: NSObject, UIViewControllerAnimatedTransitio
                 }
                 
             }else{
-                forceCardToFillBottom.isActive = false
                 
                 detailView.removeConstraint(forceCardToFillBottom)
                 
@@ -101,7 +97,7 @@ final class DismissingCardAnimation: NSObject, UIViewControllerAnimatedTransitio
         UIView.animate(withDuration: transitionDuration(using: context), delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: []) {
             animateCardViewBackToPlace()
         } completion: { (finished) in
-            completeEverything()
+            finishingAnimations()
         }
         
         UIView.animate(withDuration: transitionDuration(using: context) * 0.6) {
